@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const Overlay = styled.div`
     width: 100%;
@@ -120,6 +120,11 @@ export const Actions = styled.footer`
     display: flex;
     flex-direction: column;
     margin-top: 32px;
+
+    button:disabled{
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
 
     .primary{
         background: #333;
