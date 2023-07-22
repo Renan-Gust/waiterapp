@@ -34,10 +34,14 @@ export function OrdersBoard({ icon, title, orders, onCancelOrder, onChangeOrderS
     async function handleCancelOrder(){
         setIsLoading(true)
 
-        await api.delete(`/orders/${selectedOrder?.id}`)
+        const response = await api.delete(`/order/${selectedOrder?.id}`)
+        if(response.data.status === "success"){
+            toast.success(`O pedido da mesa ${selectedOrder?.table} foi cancelado`)
+            onCancelOrder(selectedOrder!.id)
+        } else {
+            toast.error(response.data.message)
+        }
 
-        toast.success(`O pedido da mesa ${selectedOrder?.table} foi cancelado`)
-        onCancelOrder(selectedOrder!.id)
         setIsLoading(false)
         setIsModalVisible(false)
     }
@@ -47,10 +51,14 @@ export function OrdersBoard({ icon, title, orders, onCancelOrder, onChangeOrderS
 
         const status = selectedOrder?.status === 'WAITING' ? 'IN_PRODUCTION' : 'DONE'
 
-        await api.patch(`/orders/${selectedOrder?.id}`, {status})
+        const response = await api.patch(`/order/${selectedOrder?.id}`, JSON.stringify({ status }))
+        if(response.data.status === "success"){
+            toast.success(`O pedido da mesa ${selectedOrder?.table} teve o status alterado`)
+            onChangeOrderStatus(selectedOrder!.id, status)
+        } else {
+            toast.error(response.data.message)
+        }
 
-        toast.success(`O pedido da mesa ${selectedOrder?.table} teve o status alterado`)
-        onChangeOrderStatus(selectedOrder!.id, status)
         setIsLoading(false)
         setIsModalVisible(false)
     }

@@ -5,10 +5,8 @@ export interface Order {
     products: {
         id: number;
         quantity: number;
-        product: {
-            name: string;
-            imagePath: string;
-            price: number;
-        };
+        name: string;
+        image: string;
+        price: number;
     }[];
 }

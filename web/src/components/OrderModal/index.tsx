@@ -18,10 +18,12 @@ export function OrderModal({ visible, order, onClose, onCancelOrder, isLoading, 
         return null
     }
 
-    const total = order.products.reduce((total, { product, quantity }) => {
-        return total + (product.price * quantity)
+    const total = order.products.reduce((total, { price, quantity }) => {
+        return total + (price * quantity)
     }, 0)
 
+    console.log(order)
+    
     return(
         <Overlay>
             <ModalBody>
@@ -53,16 +55,16 @@ export function OrderModal({ visible, order, onClose, onCancelOrder, isLoading, 
                     <strong>Itens</strong>
 
                     <div className="order-items">
-                        {order.products.map(({ id, product, quantity }) => (
-                            <div className="item" key={id}>
+                        {order.products.map((product) => (
+                            <div className="item" key={product.id}>
                                 <img 
-                                    src="/images/products/marguerita.png" 
+                                    src={product.image} 
                                     alt={product.name}
                                     width="48"
                                     height="24.43"
                                 />
 
-                                <span className="quantity">{quantity}x</span>
+                                <span className="quantity">{product.quantity}x</span>
 
                                 <div className="product-details">
                                     <strong>{product.name}</strong>
